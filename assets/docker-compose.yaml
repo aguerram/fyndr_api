@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  casdoor:
+    image: casbin/casdoor:latest
+    container_name: casdoor_oauth2
+    ports:
+      - "8000:8000"
+    environment:
+      driverName: postgres
+      dataSourceName: ${DB_DSN}
