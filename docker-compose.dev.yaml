@@ -71,7 +71,7 @@ services:
       dockerfile: Dockerfile-dev
     container_name: api
     environment:
-      - RUN_MODE=${RUN_MODE:-dev}
+      - DEBUG=${DEBUG:-false}
     networks:
       - web
     ports:

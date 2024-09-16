@@ -35,6 +35,9 @@ endif
 start-docker:
 	@docker-compose --env-file .env -f docker-compose.dev.yaml up
 
+re-build-docker:
+	@docker-compose --env-file .env -f docker-compose.dev.yaml build
+
 stop-docker:
 	@docker-compose --env-file .env -f docker-compose.dev.yaml down
 
