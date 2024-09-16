@@ -10,14 +10,14 @@ type ApiErrorResponse struct {
 
 func PageNotFound() *ApiErrorResponse {
 	return &ApiErrorResponse{
-		Code:    1,
+		Code:    404001,
 		Status:  fiber.StatusNotFound,
 		Message: "The page you are looking for does not exist",
 	}
 }
 func BadRequest() *ApiErrorResponse {
 	return &ApiErrorResponse{
-		Code:    2,
+		Code:    400001,
 		Status:  fiber.StatusBadRequest,
 		Message: "Bad Request",
 	}
@@ -25,7 +25,7 @@ func BadRequest() *ApiErrorResponse {
 
 func InternalServerError() *ApiErrorResponse {
 	return &ApiErrorResponse{
-		Code:    3,
+		Code:    500001,
 		Status:  fiber.StatusInternalServerError,
 		Message: "Internal Server Error",
 	}

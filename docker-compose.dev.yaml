@@ -76,6 +76,7 @@ services:
       - web
     ports:
       - "${API_HTTP_PORT}:8081"
+      - "2345:2345"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"

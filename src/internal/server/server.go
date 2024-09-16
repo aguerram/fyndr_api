@@ -2,6 +2,8 @@ package server
 
 import (
 	"context"
+	"fyndr.com/api/src/config"
+	"fyndr.com/api/src/pkg/error_handler"
 	"github.com/gofiber/fiber/v2"
 	"github.com/phuslu/log"
 	"os"
@@ -12,8 +14,15 @@ import (
 
 type GracefulShutdownHandler func(ctx context.Context)
 
-func StartHttpServer() (*fiber.App, func(ctx context.Context)) {
-	app := fiber.New()
+func StartHttpServer(env *config.AppEnv, apiErrorHandler *error_handler.ApiErrorHandler) (*fiber.App, func(ctx context.Context)) {
+	httpServerConfig := fiber.Config{
+		ErrorHandler: apiErrorHandler.ApiErrorHandler,
+		ReadTimeout:  time.Second * 30,
+		WriteTimeout: time.Second * 20,
+		IdleTimeout:  time.Second * 20,
+		AppName:      env.AppName,
+	}
+	app := fiber.New(httpServerConfig)
 	return app, func(ctx context.Context) {
 		log.Info().Msg("Shutting down server")
 		if err := app.ShutdownWithContext(ctx); err != nil {

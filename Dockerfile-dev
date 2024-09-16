@@ -5,6 +5,9 @@ WORKDIR /app
 # Install Air for live reload
 RUN go install github.com/cosmtrek/air@v1.51.0
 
+# Install Delve debugger
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
 # Copy go.mod and go.sum files
 COPY go.mod go.sum ./
 
@@ -14,8 +17,13 @@ RUN go mod download
 # Copy the rest of the source code
 COPY . .
 
-# Expose port for the application
-EXPOSE ${API_HTTP_PORT}
+# Expose ports for the application and debugger
+EXPOSE ${API_HTTP_PORT} 2345
 
 # Command to run when the container starts
-CMD ["sh", "-c", "air -c .air.toml"]
+#CMD ["air", "-c", ".air.toml"]
+
+# Alternative command for debugging
+CMD ["dlv", "debug", "--headless", "--listen=:2345", "--api-version=2", "--accept-multiclient", "--continue", "./src/main.go"]
+
+CMD "dlv --listen=:2345 --headless=true --api-version=2 --accept-multiclient exec ./tmp/main.go"
