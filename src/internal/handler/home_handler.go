@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"fyndr.com/api/config"
+	"fyndr.com/api/src/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/phuslu/log"
 	"gorm.io/gorm"

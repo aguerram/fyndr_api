@@ -7,8 +7,11 @@ import (
 )
 
 type AppEnv struct {
-	DbDsn    string
-	HttpPort string
+	DbDsn            string
+	HttpPort         string
+	DiscoveryAppName string
+	ConsulHost       string
+	AppHost          string
 }
 
 func InitializeEnv(envFile ...string) *AppEnv {
@@ -17,8 +20,11 @@ func InitializeEnv(envFile ...string) *AppEnv {
 		log.Panic().Err(err).Msg("Error loading .env file")
 	}
 	return &AppEnv{
-		DbDsn:    getOrPanic("DB_DSN"),
-		HttpPort: getOrDefault("HTTP_PORT", "8080"),
+		DbDsn:            getOrPanic("DB_DSN"),
+		HttpPort:         getOrDefault("API_HTTP_PORT", "8080"),
+		DiscoveryAppName: getOrPanic("DISCOVERY_APP_NAME"),
+		AppHost:          getOrPanic("APP_HOST"),
+		ConsulHost:       getOrPanic("CONSUL_HOST"),
 	}
 }
 

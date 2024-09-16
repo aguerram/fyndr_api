@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/phuslu/log"
 	"os"
 	"os/signal"
@@ -15,13 +14,6 @@ type GracefulShutdownHandler func(ctx context.Context)
 
 func StartHttpServer() (*fiber.App, func(ctx context.Context)) {
 	app := fiber.New()
-	app.Use(logger.New(logger.Config{
-		Next: func(c *fiber.Ctx) bool {
-			return c.Path() == "/api/v1/health"
-		},
-	}))
-	//serve static files
-	app.Static("/", "./assets/static")
 	return app, func(ctx context.Context) {
 		log.Info().Msg("Shutting down server")
 		if err := app.ShutdownWithContext(ctx); err != nil {

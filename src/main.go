@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"fyndr.com/api/config"
-	"fyndr.com/api/internal/server"
+	"fyndr.com/api/src/config"
+	"fyndr.com/api/src/internal/server"
 	"github.com/phuslu/log"
 	"time"
 )
@@ -15,6 +15,9 @@ func main() {
 	config.InitializeLogger()
 	env := config.InitializeEnv()
 
+	//initialize oauth2
+
+	//to handle panics in the application
 	defer func() {
 		if r := recover(); r != nil {
 			log.Error().Msgf("Application panicked: %v", r)
@@ -43,8 +46,8 @@ func main() {
 }
 
 func handlePanic() {
-	ctx, close := context.WithTimeout(context.Background(), 10*time.Second)
-	defer close()
+	ctx, closeCtx := context.WithTimeout(context.Background(), 10*time.Second)
+	defer closeCtx()
 	for _, handler := range gracefulShutdowns {
 		if handler == nil {
 			continue
