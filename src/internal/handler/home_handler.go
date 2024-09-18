@@ -22,7 +22,7 @@ func NewHomeHandler(env *config.AppEnv, db *gorm.DB) Handler {
 func (h *HomeHandler) Home(c *fiber.Ctx) error {
 	log.Info().Msg("Incoming requests to HomeHandler.Home")
 	return c.JSON(fiber.Map{
-		"message": "Hello, World!",
+		"message": "sdsds",
 	})
 }
 
